@@ -12,9 +12,9 @@ public class ReactiveProperty<T>
         get => _value;
         set
         {
-            // todotodotododo 1: if Equals(_value, value) -> return (no change = no event)
-            // todotodotododo 2: _value = value
-            // todotodotododo 3: OnChanged?.Invoke(_value)
+            if (Equals(_value, value)) return;
+            _value = value;
+            OnChanged?.Invoke(_value);
         }
     }
 }
