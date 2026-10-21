@@ -18,8 +18,8 @@ public class Hand
 
     public void Clear()
     {
-        // do 1: clear the list
-        // do 2: set score back to 0
+        _cards.Clear();
+        Score.Value = 0;
     }
 
     private int CalculateScore()
@@ -29,12 +29,16 @@ public class Hand
 
         foreach (CardData card in _cards)
         {
-            // do 1: add card.value to total
-            // do 2: if card.isace, add 1 to aces
+            total += card.value;
+            if (card.IsAce)
+                aces++;
         }
 
-        // do 3: while total is over 21 and aces is more than 0:
-        //         subtract 10 from total, subtract 1 from aces
+        while (total > 21 && aces > 0)
+        {
+            total -= 10;
+            aces--;
+        }
 
         return total;
     }
