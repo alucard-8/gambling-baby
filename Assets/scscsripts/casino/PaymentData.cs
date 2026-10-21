@@ -7,9 +7,8 @@ public class PaymentData : ScriptableObject
     public bool isFake;
     public int tokensGiven;
 
-    // Td 1: add an int called realCost
-    // (how much real money it costs fakes cost 0)
+    public int realCost;
 
-    // Td 2 : add a float called detectChance
-    // put [Range(0f, 1f)] on the line above it so the Insp shows a slider
+    [Range(0f, 1f)]
+    public float detectChance;
 }
