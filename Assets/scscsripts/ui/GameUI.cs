@@ -107,7 +107,7 @@ public class GameUI : MonoBehaviour
 
     private void SpawnCard(CardData card, bool isPlayer)
     {
-        Transform parnt = isPlayer ? playerCards : dealerCards;
+        Transform parent = isPlayer ? playerCards : dealerCards;
         GameObject cardObject = Instantiate(cardPrefab, parent);
 
         TMP_Text rankText = cardObject.GetComponentInChildren<TMP_Text>();
