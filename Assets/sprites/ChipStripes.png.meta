@@ -1,0 +1,782 @@
+fileFormatVersion: 2
+guid: 7d6111d695fe2c441be3fd0cf5ced6dc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3883719660728156372
+    second: ChipStripes_0
+  - first:
+      213: -4616957992068881146
+    second: ChipStripes_1
+  - first:
+      213: 3921688254866776991
+    second: ChipStripes_2
+  - first:
+      213: 8722754911201703302
+    second: ChipStripes_3
+  - first:
+      213: 2218504589596087311
+    second: ChipStripes_4
+  - first:
+      213: 65095752837447729
+    second: ChipStripes_5
+  - first:
+      213: 2169668981179571584
+    second: ChipStripes_6
+  - first:
+      213: 6823929795111671491
+    second: ChipStripes_7
+  - first:
+      213: -5674414487102435314
+    second: ChipStripes_8
+  - first:
+      213: 6725303235543482162
+    second: ChipStripes_9
+  - first:
+      213: -2629435099773673642
+    second: ChipStripes_10
+  - first:
+      213: -7364092349480271651
+    second: ChipStripes_11
+  - first:
+      213: 5050912623670825835
+    second: ChipStripes_12
+  - first:
+      213: -743225781017025982
+    second: ChipStripes_13
+  - first:
+      213: -8516053019399460822
+    second: ChipStripes_14
+  - first:
+      213: -4742558166980329373
+    second: ChipStripes_15
+  - first:
+      213: -4870374588264902958
+    second: ChipStripes_16
+  - first:
+      213: -2171713061921345538
+    second: ChipStripes_17
+  - first:
+      213: 8156089377503749451
+    second: ChipStripes_18
+  - first:
+      213: 5006396468419415864
+    second: ChipStripes_19
+  - first:
+      213: -2389951032844681372
+    second: ChipStripes_20
+  - first:
+      213: -6384619893345699562
+    second: ChipStripes_21
+  - first:
+      213: -7879973070267970947
+    second: ChipStripes_22
+  - first:
+      213: -5417298268012924864
+    second: ChipStripes_23
+  - first:
+      213: -7929693456945999720
+    second: ChipStripes_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ChipStripes_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 184
+        width: 52
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2ff81f9b814a1ac0800000000000000
+      internalID: -3883719660728156372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_1
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 241
+        width: 54
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60565dbfa254defb0800000000000000
+      internalID: -4616957992068881146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_2
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 219
+        width: 57
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f93e72790b2ac6630800000000000000
+      internalID: 3921688254866776991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_3
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 215
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 685b8f860637d0970800000000000000
+      internalID: 8722754911201703302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_4
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 230
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f04d27b8b26b9ce10800000000000000
+      internalID: 2218504589596087311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_5
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 230
+        width: 19
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13043480e3447e000800000000000000
+      internalID: 65095752837447729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_6
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 215
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08d546761763c1e10800000000000000
+      internalID: 2169668981179571584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_7
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 191
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c6d5d17ef773be50800000000000000
+      internalID: 6823929795111671491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_8
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 191
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e00ddeb961e6041b0800000000000000
+      internalID: -5674414487102435314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_9
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 144
+        width: 41
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23fba5919a3155d50800000000000000
+      internalID: 6725303235543482162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_10
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 160
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65fdb0645be528bd0800000000000000
+      internalID: -2629435099773673642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_11
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 161
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd08e08560d7dc990800000000000000
+      internalID: -7364092349480271651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_12
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 92
+        width: 41
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b639f653542781640800000000000000
+      internalID: 5050912623670825835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_13
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 127
+        width: 8
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 242619607188fa5f0800000000000000
+      internalID: -743225781017025982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_14
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 127
+        width: 8
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a286d4a16e6e0d980800000000000000
+      internalID: -8516053019399460822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_15
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 95
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 360828a697c0f2eb0800000000000000
+      internalID: -4742558166980329373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_16
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 49
+        width: 52
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2de8167cd14f86cb0800000000000000
+      internalID: -4870374588264902958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_17
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 95
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eff2a16f9768cd1e0800000000000000
+      internalID: -2171713061921345538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_18
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 19
+        width: 58
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b45a2767310403170800000000000000
+      internalID: 8156089377503749451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_19
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 69
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83fc8e0201b4a7540800000000000000
+      internalID: 5006396468419415864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_20
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 69
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46ff6b8b23035ded0800000000000000
+      internalID: -2389951032844681372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_21
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 54
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 619bc3fb8064567a0800000000000000
+      internalID: -6384619893345699562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_22
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 50
+        width: 20
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7a88031e36b4a290800000000000000
+      internalID: -7879973070267970947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_23
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 54
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04030c46de3e1d4b0800000000000000
+      internalID: -5417298268012924864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChipStripes_24
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 9
+        width: 54
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8909ef070d114f190800000000000000
+      internalID: -7929693456945999720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ChipStripes_0: -3883719660728156372
+      ChipStripes_1: -4616957992068881146
+      ChipStripes_10: -2629435099773673642
+      ChipStripes_11: -7364092349480271651
+      ChipStripes_12: 5050912623670825835
+      ChipStripes_13: -743225781017025982
+      ChipStripes_14: -8516053019399460822
+      ChipStripes_15: -4742558166980329373
+      ChipStripes_16: -4870374588264902958
+      ChipStripes_17: -2171713061921345538
+      ChipStripes_18: 8156089377503749451
+      ChipStripes_19: 5006396468419415864
+      ChipStripes_2: 3921688254866776991
+      ChipStripes_20: -2389951032844681372
+      ChipStripes_21: -6384619893345699562
+      ChipStripes_22: -7879973070267970947
+      ChipStripes_23: -5417298268012924864
+      ChipStripes_24: -7929693456945999720
+      ChipStripes_3: 8722754911201703302
+      ChipStripes_4: 2218504589596087311
+      ChipStripes_5: 65095752837447729
+      ChipStripes_6: 2169668981179571584
+      ChipStripes_7: 6823929795111671491
+      ChipStripes_8: -5674414487102435314
+      ChipStripes_9: 6725303235543482162
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

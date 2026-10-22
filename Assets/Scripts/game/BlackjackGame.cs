@@ -1,31 +1,38 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
-public enum GameState { Betting, PlayerTurn, DealerTurn, Result }
+public enum GameState { Betting, Dealing, PlayerTurn, DealerTurn, Result, GameOver }
+public enum RoundResult { None, Win, Blackjack, Lose, Push }
 
 public class BlackjackGame : MonoBehaviour
 {
     [SerializeField] private DeckData deckData;
-    [SerializeField] private int startTokens = 100;
-    [SerializeField] private int dealerStandsOn = 17;
+    [SerializeField] private GameRules rules;
 
     public Player Player { get; private set; }
     public Hand Dealer { get; } = new Hand();
 
     public ReactiveProperty<GameState> State { get; } = new ReactiveProperty<GameState>(GameState.Betting);
     public ReactiveProperty<string> Message { get; } = new ReactiveProperty<string>("place your bet");
+    public ReactiveProperty<RoundResult> Result { get; } = new ReactiveProperty<RoundResult>(RoundResult.None);
+    public ReactiveProperty<bool> DealerHoleHidden { get; } = new ReactiveProperty<bool>(false);
 
-    // card that was dealt and true if it went to the player
-    public event Action<CardData, bool> OnCardDealt;
-    // fires when a new round starts so the ui can clear the table
+    public event Action<CardData, bool, bool> OnCardDealt;
+    public event Action OnDealerHoleRevealed;
     public event Action OnRoundStarted;
 
     private Deck _deck;
+    private WaitForSeconds _dealWait;
+    private WaitForSeconds _dealerWait;
 
     private void Awake()
     {
         Player = new Player("Wassim", true);
-        Player.GainTokens(startTokens);
+        Player.GainTokens(rules.startTokens);
+
+        _dealWait = new WaitForSeconds(rules.dealDelay);
+        _dealerWait = new WaitForSeconds(rules.dealerDrawDelay);
     }
 
     public void PlaceBet(int amount)
@@ -45,7 +52,16 @@ public class BlackjackGame : MonoBehaviour
             return;
         }
 
-        Message.Value = $"bet placed: {amount}";
+        Message.Value = $"bet placed: {Player.Bet.Value}";
+    }
+
+    public void ClearBet()
+    {
+        if (State.Value != GameState.Betting)
+            return;
+
+        Player.ClearBet();
+        Message.Value = "place your bet";
     }
 
     public void Deal()
@@ -59,24 +75,7 @@ public class BlackjackGame : MonoBehaviour
             return;
         }
 
-        _deck = new Deck(deckData);
-        Player.Hand.Clear();
-        Dealer.Clear();
-        OnRoundStarted?.Invoke();
-
-        GiveCard(Player.Hand, true);
-        GiveCard(Dealer, false);
-        GiveCard(Player.Hand, true);
-        GiveCard(Dealer, false);
-
-        if (Player.Hand.IsBlackjack)
-        {
-            EndRound();
-            return;
-        }
-
-        State.Value = GameState.PlayerTurn;
-        Message.Value = "hit or stand";
+        StartCoroutine(DealRoutine());
     }
 
     public void Hit()
@@ -84,7 +83,7 @@ public class BlackjackGame : MonoBehaviour
         if (State.Value != GameState.PlayerTurn)
             return;
 
-        GiveCard(Player.Hand, true);
+        GiveCard(Player.Hand, true, false);
         if (Player.Hand.IsBust)
             EndRound();
     }
@@ -94,11 +93,28 @@ public class BlackjackGame : MonoBehaviour
         if (State.Value != GameState.PlayerTurn)
             return;
 
-        State.Value = GameState.DealerTurn;
-        while (Dealer.Score.Value < dealerStandsOn)
-            GiveCard(Dealer, false);
+        StartCoroutine(DealerRoutine());
+    }
 
-        EndRound();
+    public void DoubleDown()
+    {
+        if (State.Value != GameState.PlayerTurn || Player.Hand.Cards.Count != 2)
+            return;
+
+        if (!Player.TryDoubleBet())
+        {
+            Message.Value = "not enough tokens to double";
+            return;
+        }
+
+        GiveCard(Player.Hand, true, false);
+        if (Player.Hand.IsBust)
+        {
+            EndRound();
+            return;
+        }
+
+        StartCoroutine(DealerRoutine());
     }
 
     public void NextRound()
@@ -106,54 +122,142 @@ public class BlackjackGame : MonoBehaviour
         if (State.Value != GameState.Result)
             return;
 
-        if (Player.Tokens.Value <= 0)
-        {
-            Message.Value = "game over";
-            return;
-        }
-
+        Result.Value = RoundResult.None;
         State.Value = GameState.Betting;
         Message.Value = "place your bet";
     }
 
-    private void GiveCard(Hand hand, bool isPlayer)
+    public void Restart()
+    {
+        if (State.Value != GameState.GameOver)
+            return;
+
+        Player.GainTokens(rules.startTokens);
+        Player.Hand.Clear();
+        Dealer.Clear();
+        DealerHoleHidden.Value = false;
+        OnRoundStarted?.Invoke();
+        Result.Value = RoundResult.None;
+        State.Value = GameState.Betting;
+        Message.Value = "place your bet";
+    }
+
+    private IEnumerator DealRoutine()
+    {
+        State.Value = GameState.Dealing;
+        Result.Value = RoundResult.None;
+        Message.Value = "dealing";
+
+        _deck = new Deck(deckData);
+        Player.Hand.Clear();
+        Dealer.Clear();
+        OnRoundStarted?.Invoke();
+
+        GiveCard(Player.Hand, true, false);
+        yield return _dealWait;
+        GiveCard(Dealer, false, false);
+        yield return _dealWait;
+        GiveCard(Player.Hand, true, false);
+        yield return _dealWait;
+
+        DealerHoleHidden.Value = true;
+        GiveCard(Dealer, false, true);
+        yield return _dealWait;
+
+        if (Player.Hand.IsBlackjack)
+        {
+            EndRound();
+            yield break;
+        }
+
+        State.Value = GameState.PlayerTurn;
+        Message.Value = "hit stand or double";
+    }
+
+    private IEnumerator DealerRoutine()
+    {
+        State.Value = GameState.DealerTurn;
+        Message.Value = "dealer turn";
+
+        RevealHole();
+        yield return _dealerWait;
+
+        while (Dealer.Score.Value < rules.dealerStandsOn)
+        {
+            GiveCard(Dealer, false, false);
+            yield return _dealerWait;
+        }
+
+        EndRound();
+    }
+
+    private void GiveCard(Hand hand, bool isPlayer, bool faceDown)
     {
         CardData card = _deck.Draw();
         hand.Add(card);
-        OnCardDealt?.Invoke(card, isPlayer);
+        OnCardDealt?.Invoke(card, isPlayer, faceDown);
+    }
+
+    private void RevealHole()
+    {
+        if (!DealerHoleHidden.Value)
+            return;
+
+        DealerHoleHidden.Value = false;
+        OnDealerHoleRevealed?.Invoke();
     }
 
     private void EndRound()
     {
+        RevealHole();
+
         int p = Player.Hand.Score.Value;
         int d = Dealer.Score.Value;
 
         if (Player.Hand.IsBust)
         {
             Player.LoseBet();
-            Message.Value = "you bust";
+            Finish(RoundResult.Lose, "you bust");
+        }
+        else if (Player.Hand.IsBlackjack && !Dealer.IsBlackjack)
+        {
+            Player.WinBlackjack(rules.blackjackPayout);
+            Finish(RoundResult.Blackjack, "blackjack");
         }
         else if (Dealer.IsBust)
         {
             Player.WinBet();
-            Message.Value = "dealer bust, you win";
+            Finish(RoundResult.Win, "dealer bust, you win");
         }
         else if (p > d)
         {
             Player.WinBet();
-            Message.Value = "you win";
+            Finish(RoundResult.Win, "you win");
         }
         else if (p < d)
         {
             Player.LoseBet();
-            Message.Value = "dealer wins";
+            Finish(RoundResult.Lose, "dealer wins");
         }
         else
         {
             Player.PushBet();
-            Message.Value = "push";
+            Finish(RoundResult.Push, "push");
+        }
+    }
+
+    private void Finish(RoundResult result, string message)
+    {
+        Result.Value = result;
+
+        if (Player.Tokens.Value <= 0)
+        {
+            Message.Value = message + " - game over";
+            State.Value = GameState.GameOver;
+            return;
         }
 
+        Message.Value = message;
         State.Value = GameState.Result;
     }
 }

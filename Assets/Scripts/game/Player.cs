@@ -49,6 +49,29 @@ public class Player
         Bet.Value = 0;
     }
 
+    public void WinBlackjack(float payout)
+    {
+        Tokens.Value += Bet.Value + Mathf.FloorToInt(Bet.Value * payout);
+        Bet.Value = 0;
+    }
+
+    public bool TryDoubleBet()
+    {
+        int amount = Bet.Value;
+        if (amount <= 0 || Tokens.Value < amount)
+            return false;
+
+        Tokens.Value -= amount;
+        Bet.Value += amount;
+        return true;
+    }
+
+    public void ClearBet()
+    {
+        Tokens.Value += Bet.Value;
+        Bet.Value = 0;
+    }
+
     public void PushBet()
     {
         Tokens.Value += Bet.Value;
