@@ -5,7 +5,7 @@ public class Hand
     private readonly List<CardData> _cards = new List<CardData>();
 
     public IReadOnlyList<CardData> Cards => _cards;
-    public ReactiveProperty<int> Score = new ReactiveProperty<int>(0);
+    public ReactiveProperty<int> Score { get; } = new ReactiveProperty<int>(0);
 
     public bool IsBust => Score.Value > 21;
     public bool IsBlackjack => _cards.Count == 2 && Score.Value == 21;

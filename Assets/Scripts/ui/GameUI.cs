@@ -112,7 +112,7 @@ public class GameUI : MonoBehaviour
 
         TMP_Text rankText = cardObject.GetComponentInChildren<TMP_Text>();
         if (rankText != null)
-            rankText.text = card.rankName;
+            rankText.text = card.sprite != null ? "" : card.rankName;
 
         if (card.sprite != null)
         {

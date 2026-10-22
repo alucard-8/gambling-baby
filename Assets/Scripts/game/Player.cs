@@ -5,9 +5,9 @@ public class Player
     public string Name { get; }
     public bool IsHuman { get; }
 
-    public ReactiveProperty<int> Money  = new ReactiveProperty<int>(200);
-    public ReactiveProperty<int> Tokens = new ReactiveProperty<int>(0);
-    public ReactiveProperty<int> Bet    = new ReactiveProperty<int>(0);
+    public ReactiveProperty<int> Money { get; }  = new ReactiveProperty<int>(200);
+    public ReactiveProperty<int> Tokens { get; } = new ReactiveProperty<int>(0);
+    public ReactiveProperty<int> Bet { get; }    = new ReactiveProperty<int>(0);
 
     public Hand Hand { get; } = new Hand();
 

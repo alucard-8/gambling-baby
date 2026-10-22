@@ -15,4 +15,4 @@ MonoBehaviour:
   suit: 3
   rankName: K
   value: 10
-  sprite: {fileID: 0}
+  sprite: {fileID: -5051851535343112070, guid: 3d54f3a2351affb46b585b7e4d895c6f, type: 3}

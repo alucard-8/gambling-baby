@@ -12,8 +12,8 @@ public class BlackjackGame : MonoBehaviour
     public Player Player { get; private set; }
     public Hand Dealer { get; } = new Hand();
 
-    public ReactiveProperty<GameState> State = new ReactiveProperty<GameState>(GameState.Betting);
-    public ReactiveProperty<string> Message = new ReactiveProperty<string>("place your bet");
+    public ReactiveProperty<GameState> State { get; } = new ReactiveProperty<GameState>(GameState.Betting);
+    public ReactiveProperty<string> Message { get; } = new ReactiveProperty<string>("place your bet");
 
     // card that was dealt and true if it went to the player
     public event Action<CardData, bool> OnCardDealt;
