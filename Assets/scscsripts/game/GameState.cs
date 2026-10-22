@@ -30,51 +30,97 @@ public class BlackjackGame : MonoBehaviour
 
     public void PlaceBet(int amount)
     {
-        // todo 1 if state is not betting return
-        // todo 2 if the player cant place the bet set message to not enough tokens and return
-        // todo 3 set message to bet placed then the bet amount
+        if (State.Value != GameState.Betting)
+            return;
+
+        if (amount <= 0)
+        {
+            Message.Value = "bet must be greater than 0";
+            return;
+        }
+
+        if (!Player.TryPlaceBet(amount))
+        {
+            Message.Value = "not enough tokens";
+            return;
+        }
+
+        Message.Value = $"bet placed: {amount}";
     }
 
     public void Deal()
     {
-        // todo 1 if state is not betting or the player bet is 0 return
-        // todo 2 make a new deck from deckdata
-        // todo 3 clear the player hand and the dealer hand
-        // todo 4 fire onroundstarted
+        if (State.Value != GameState.Betting || Player.Bet.Value <= 0)
+            return;
 
-        // todo 5 give 2 cards to the player and 2 cards to the dealer using givecard
+        if (deckData == null || deckData.cards == null || deckData.cards.Count < 4)
+        {
+            Debug.LogError("Cannot deal: the deck must contain at least four cards.");
+            return;
+        }
 
-        // todo 6 if the player hand is blackjack call endround and return
-        // todo 7 set state to playerturn and message to hit or stand
+        _deck = new Deck(deckData);
+        Player.Hand.Clear();
+        Dealer.Clear();
+        OnRoundStarted?.Invoke();
+
+        GiveCard(Player.Hand, true);
+        GiveCard(Dealer, false);
+        GiveCard(Player.Hand, true);
+        GiveCard(Dealer, false);
+
+        if (Player.Hand.IsBlackjack)
+        {
+            EndRound();
+            return;
+        }
+
+        State.Value = GameState.PlayerTurn;
+        Message.Value = "hit or stand";
     }
 
     public void Hit()
     {
-        // todo 1 if state is not playerturn return
-        // todo 2 give a card to the player
-        // todo 3 if the player hand is bust call endround
+        if (State.Value != GameState.PlayerTurn)
+            return;
+
+        GiveCard(Player.Hand, true);
+        if (Player.Hand.IsBust)
+            EndRound();
     }
 
     public void Stand()
     {
-        // todo 1 if state is not playerturn return
-        // todo 2 set state to dealerturn
-        // todo 3 while the dealer score is less than dealerstandson give a card to the dealer
-        // todo 4 call endround
+        if (State.Value != GameState.PlayerTurn)
+            return;
+
+        State.Value = GameState.DealerTurn;
+        while (Dealer.Score.Value < dealerStandsOn)
+            GiveCard(Dealer, false);
+
+        EndRound();
     }
 
     public void NextRound()
     {
-        // todo 1 if state is not result return
-        // todo 2 if the player has 0 tokens set message to game over and return
-        // todo 3 set state to betting and message to place your bet
+        if (State.Value != GameState.Result)
+            return;
+
+        if (Player.Tokens.Value <= 0)
+        {
+            Message.Value = "game over";
+            return;
+        }
+
+        State.Value = GameState.Betting;
+        Message.Value = "place your bet";
     }
 
     private void GiveCard(Hand hand, bool isPlayer)
     {
-        // todo 1 draw a card from the deck
-        // todo 2 add it to the hand
-        // todo 3 fire oncarddealt with the card and isplayer
+        CardData card = _deck.Draw();
+        hand.Add(card);
+        OnCardDealt?.Invoke(card, isPlayer);
     }
 
     private void EndRound()
@@ -82,12 +128,32 @@ public class BlackjackGame : MonoBehaviour
         int p = Player.Hand.Score.Value;
         int d = Dealer.Score.Value;
 
-        // todo 1 if player is bust      lose bet  message you bust
-        // todo 2 else if dealer is bust win bet   message dealer bust you win
-        // todo 3 else if p is more than d win bet message you win
-        // todo 4 else if p is less than d lose bet message dealer wins
-        // todo 5 else                   push bet  message push
+        if (Player.Hand.IsBust)
+        {
+            Player.LoseBet();
+            Message.Value = "you bust";
+        }
+        else if (Dealer.IsBust)
+        {
+            Player.WinBet();
+            Message.Value = "dealer bust, you win";
+        }
+        else if (p > d)
+        {
+            Player.WinBet();
+            Message.Value = "you win";
+        }
+        else if (p < d)
+        {
+            Player.LoseBet();
+            Message.Value = "dealer wins";
+        }
+        else
+        {
+            Player.PushBet();
+            Message.Value = "push";
+        }
 
-        // todo 6 set state to result
+        State.Value = GameState.Result;
     }
 }
