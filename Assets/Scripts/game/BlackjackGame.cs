@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 public enum GameState { Betting, PlayerTurn, DealerTurn, Result, GameOver }
+public enum RoundResult { Win, Lose, Push }
 
 public class BlackjackGame : MonoBehaviour
 {
@@ -17,11 +18,13 @@ public class BlackjackGame : MonoBehaviour
 
     public ReactiveProperty<GameState> State { get; } = new ReactiveProperty<GameState>(GameState.Betting);
     public ReactiveProperty<string> Message { get; } = new ReactiveProperty<string>(string.Empty);
+    public ReactiveProperty<int> CardsLeft { get; } = new ReactiveProperty<int>(0);
     public ReactiveProperty<bool> DealerHoleHidden { get; } = new ReactiveProperty<bool>(false);
 
     public event Action<CardData, bool, bool> OnCardDealt;
     public event Action OnDealerHoleRevealed;
     public event Action OnRoundStarted;
+    public event Action<RoundResult> OnRoundEnded;
 
     private Deck _deck;
 
@@ -30,6 +33,7 @@ public class BlackjackGame : MonoBehaviour
         Bettor = new Player();
         Bettor.ResetTokens(rules.startTokens);
         Message.Value = texts.placeYourBet;
+        Reshuffle();
     }
 
     public void PlaceBet(int amount)
@@ -72,7 +76,9 @@ public class BlackjackGame : MonoBehaviour
             return;
         }
 
-        _deck = new Deck(deckData);
+        if (_deck.Count < deckData.cards.Count * rules.reshuffleBelowPercent)
+            Reshuffle();
+
         PlayerHand.Clear();
         Dealer.Clear();
         OnRoundStarted?.Invoke();
@@ -137,6 +143,11 @@ public class BlackjackGame : MonoBehaviour
         if (State.Value != GameState.Result)
             return;
 
+        PlayerHand.Clear();
+        Dealer.Clear();
+        DealerHoleHidden.Value = false;
+        OnRoundStarted?.Invoke();
+
         State.Value = GameState.Betting;
         Message.Value = texts.placeYourBet;
     }
@@ -152,9 +163,19 @@ public class BlackjackGame : MonoBehaviour
         EndRound();
     }
 
+    private void Reshuffle()
+    {
+        _deck = new Deck(deckData);
+        CardsLeft.Value = _deck.Count;
+    }
+
     private void GiveCard(Hand hand, bool isPlayer, bool faceDown)
     {
+        if (_deck.Count == 0)
+            Reshuffle();
+
         CardData card = _deck.Draw();
+        CardsLeft.Value = _deck.Count;
         hand.Add(card);
         OnCardDealt?.Invoke(card, isPlayer, faceDown);
     }
@@ -178,37 +199,39 @@ public class BlackjackGame : MonoBehaviour
         if (PlayerHand.IsBust)
         {
             Bettor.LoseBet();
-            Finish(texts.playerBust);
+            Finish(texts.playerBust, RoundResult.Lose);
         }
         else if (PlayerHand.IsBlackjack && !Dealer.IsBlackjack)
         {
             Bettor.Win(rules.blackjackPayout);
-            Finish(texts.blackjack);
+            Finish(texts.blackjack, RoundResult.Win);
         }
         else if (Dealer.IsBust)
         {
             Bettor.Win(rules.winPayout);
-            Finish(texts.dealerBust);
+            Finish(texts.dealerBust, RoundResult.Win);
         }
         else if (p > d)
         {
             Bettor.Win(rules.winPayout);
-            Finish(texts.playerWins);
+            Finish(texts.playerWins, RoundResult.Win);
         }
         else if (p < d)
         {
             Bettor.LoseBet();
-            Finish(texts.dealerWins);
+            Finish(texts.dealerWins, RoundResult.Lose);
         }
         else
         {
             Bettor.PushBet();
-            Finish(texts.push);
+            Finish(texts.push, RoundResult.Push);
         }
     }
 
-    private void Finish(string message)
+    private void Finish(string message, RoundResult result)
     {
+        OnRoundEnded?.Invoke(result);
+
         if (Bettor.Tokens.Value < rules.MinimumBet)
         {
             Message.Value = string.Format(texts.gameOverFormat, message);

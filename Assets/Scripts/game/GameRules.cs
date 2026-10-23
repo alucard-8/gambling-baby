@@ -9,6 +9,9 @@ public class GameRules : ScriptableObject
     [Min(0f)] public float winPayout = 1f;
     [Min(0f)] public float blackjackPayout = 1.5f;
 
+    [Header("shoe")]
+    [Range(0f, 1f)] public float reshuffleBelowPercent = 0.25f;
+
     [Header("chips")]
     public int[] chipValues = { 10, 25, 50 };
 

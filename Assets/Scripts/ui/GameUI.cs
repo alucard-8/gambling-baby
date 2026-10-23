@@ -9,8 +9,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] private UITheme theme;
 
     [Header("texts")]
-    [SerializeField] private TMP_Text tokensText;
     [SerializeField] private TMP_Text betText;
+    [SerializeField] private TMP_Text cardsLeftText;
     [SerializeField] private TMP_Text playerScoreText;
     [SerializeField] private TMP_Text dealerScoreText;
     [SerializeField] private TMP_Text messageText;
@@ -38,8 +38,8 @@ public class GameUI : MonoBehaviour
 
     private void Start()
     {
-        game.Bettor.Tokens.OnChanged += OnTokensChanged;
         game.Bettor.Bet.OnChanged += OnBetChanged;
+        game.CardsLeft.OnChanged += OnCardsLeftChanged;
         game.PlayerHand.Score.OnChanged += OnPlayerScoreChanged;
         game.Dealer.Score.OnChanged += OnDealerScoreChanged;
         game.DealerHoleHidden.OnChanged += OnDealerHoleHiddenChanged;
@@ -58,8 +58,8 @@ public class GameUI : MonoBehaviour
         doubleButton.onClick.AddListener(game.DoubleDown);
         nextButton.onClick.AddListener(game.NextRound);
 
-        OnTokensChanged(game.Bettor.Tokens.Value);
         OnBetChanged(game.Bettor.Bet.Value);
+        OnCardsLeftChanged(game.CardsLeft.Value);
         OnPlayerScoreChanged(game.PlayerHand.Score.Value);
         RefreshDealerScore();
         OnMessageChanged(game.Message.Value);
@@ -68,8 +68,8 @@ public class GameUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        game.Bettor.Tokens.OnChanged -= OnTokensChanged;
         game.Bettor.Bet.OnChanged -= OnBetChanged;
+        game.CardsLeft.OnChanged -= OnCardsLeftChanged;
         game.PlayerHand.Score.OnChanged -= OnPlayerScoreChanged;
         game.Dealer.Score.OnChanged -= OnDealerScoreChanged;
         game.DealerHoleHidden.OnChanged -= OnDealerHoleHiddenChanged;
@@ -89,8 +89,8 @@ public class GameUI : MonoBehaviour
         nextButton.onClick.RemoveListener(game.NextRound);
     }
 
-    private void OnTokensChanged(int tokens) => tokensText.text = string.Format(theme.tokensFormat, tokens);
     private void OnBetChanged(int bet) => betText.text = string.Format(theme.betFormat, bet);
+    private void OnCardsLeftChanged(int cards) => cardsLeftText.text = string.Format(theme.cardsLeftFormat, cards);
     private void OnPlayerScoreChanged(int score) => playerScoreText.text = score.ToString();
     private void OnDealerScoreChanged(int score) => RefreshDealerScore();
     private void OnDealerHoleHiddenChanged(bool hidden) => RefreshDealerScore();
