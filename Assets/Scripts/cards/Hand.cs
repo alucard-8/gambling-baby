@@ -2,13 +2,17 @@ using System.Collections.Generic;
 
 public class Hand
 {
+    public const int BlackjackScore = 21;
+    public const int StartingHandSize = 2;
+    private const int SoftAceReduction = 10;
+
     private readonly List<CardData> _cards = new List<CardData>();
 
     public IReadOnlyList<CardData> Cards => _cards;
     public ReactiveProperty<int> Score { get; } = new ReactiveProperty<int>(0);
 
-    public bool IsBust => Score.Value > 21;
-    public bool IsBlackjack => _cards.Count == 2 && Score.Value == 21;
+    public bool IsBust => Score.Value > BlackjackScore;
+    public bool IsBlackjack => _cards.Count == StartingHandSize && Score.Value == BlackjackScore;
 
     public void Add(CardData card)
     {
@@ -34,9 +38,9 @@ public class Hand
                 aces++;
         }
 
-        while (total > 21 && aces > 0)
+        while (total > BlackjackScore && aces > 0)
         {
-            total -= 10;
+            total -= SoftAceReduction;
             aces--;
         }
 

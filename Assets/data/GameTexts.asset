@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92a3d8297d37b446b8e869b15bd99ee, type: 3}
+  m_Name: GameTexts
+  m_EditorClassIdentifier: Assembly-CSharp::GameTexts
+  placeYourBet: place your bet
+  notEnoughTokens: not enough tokens
+  betMustBePositive: bet must be greater than 0
+  betPlacedFormat: 'bet placed: {0}'
+  playerTurn: hit stand or double
+  notEnoughToDouble: not enough tokens to double
+  playerBust: you bust
+  blackjack: blackjack
+  dealerBust: dealer bust, you win
+  playerWins: you win
+  dealerWins: dealer wins
+  push: push
+  gameOverFormat: '{0} - game over'

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
@@ -15,9 +16,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TMP_Text messageText;
 
     [Header("bet buttons")]
-    [SerializeField] private Button bet10Button;
-    [SerializeField] private Button bet25Button;
-    [SerializeField] private Button bet50Button;
+    [SerializeField] private Button[] chipButtons;
     [SerializeField] private Button clearBetButton;
 
     [Header("action buttons")]
@@ -26,84 +25,76 @@ public class GameUI : MonoBehaviour
     [SerializeField] private Button standButton;
     [SerializeField] private Button doubleButton;
     [SerializeField] private Button nextButton;
-    [SerializeField] private Button restartButton;
 
     [Header("cards")]
     [SerializeField] private Transform playerCards;
     [SerializeField] private Transform dealerCards;
-    [SerializeField] private Transform deckPoint;
-    [SerializeField] private CardView cardPrefab;
+    [SerializeField] private GameObject cardPrefab;
 
-    private CardView _dealerHoleCard;
+    private UnityAction[] _chipActions;
+    private Image _holeCardImage;
+    private TMP_Text _holeCardRankText;
+    private CardData _holeCard;
 
     private void Start()
     {
-        game.Player.Tokens.OnChanged += OnTokensChanged;
-        game.Player.Bet.OnChanged += OnBetChanged;
-        game.Player.Hand.Score.OnChanged += OnPlayerScoreChanged;
+        game.Bettor.Tokens.OnChanged += OnTokensChanged;
+        game.Bettor.Bet.OnChanged += OnBetChanged;
+        game.PlayerHand.Score.OnChanged += OnPlayerScoreChanged;
         game.Dealer.Score.OnChanged += OnDealerScoreChanged;
         game.DealerHoleHidden.OnChanged += OnDealerHoleHiddenChanged;
         game.Message.OnChanged += OnMessageChanged;
-        game.Result.OnChanged += OnResultChanged;
         game.State.OnChanged += OnStateChanged;
 
         game.OnCardDealt += SpawnCard;
         game.OnDealerHoleRevealed += RevealDealerHole;
         game.OnRoundStarted += ClearCards;
 
-        bet10Button.onClick.AddListener(Bet10);
-        bet25Button.onClick.AddListener(Bet25);
-        bet50Button.onClick.AddListener(Bet50);
+        SetupChips();
         clearBetButton.onClick.AddListener(game.ClearBet);
         dealButton.onClick.AddListener(game.Deal);
         hitButton.onClick.AddListener(game.Hit);
         standButton.onClick.AddListener(game.Stand);
         doubleButton.onClick.AddListener(game.DoubleDown);
         nextButton.onClick.AddListener(game.NextRound);
-        restartButton.onClick.AddListener(game.Restart);
 
-        OnTokensChanged(game.Player.Tokens.Value);
-        OnBetChanged(game.Player.Bet.Value);
-        OnPlayerScoreChanged(game.Player.Hand.Score.Value);
+        OnTokensChanged(game.Bettor.Tokens.Value);
+        OnBetChanged(game.Bettor.Bet.Value);
+        OnPlayerScoreChanged(game.PlayerHand.Score.Value);
         RefreshDealerScore();
         OnMessageChanged(game.Message.Value);
-        OnResultChanged(game.Result.Value);
         OnStateChanged(game.State.Value);
     }
 
     private void OnDestroy()
     {
-        game.Player.Tokens.OnChanged -= OnTokensChanged;
-        game.Player.Bet.OnChanged -= OnBetChanged;
-        game.Player.Hand.Score.OnChanged -= OnPlayerScoreChanged;
+        game.Bettor.Tokens.OnChanged -= OnTokensChanged;
+        game.Bettor.Bet.OnChanged -= OnBetChanged;
+        game.PlayerHand.Score.OnChanged -= OnPlayerScoreChanged;
         game.Dealer.Score.OnChanged -= OnDealerScoreChanged;
         game.DealerHoleHidden.OnChanged -= OnDealerHoleHiddenChanged;
         game.Message.OnChanged -= OnMessageChanged;
-        game.Result.OnChanged -= OnResultChanged;
         game.State.OnChanged -= OnStateChanged;
         game.OnCardDealt -= SpawnCard;
         game.OnDealerHoleRevealed -= RevealDealerHole;
         game.OnRoundStarted -= ClearCards;
 
-        bet10Button.onClick.RemoveListener(Bet10);
-        bet25Button.onClick.RemoveListener(Bet25);
-        bet50Button.onClick.RemoveListener(Bet50);
+        for (int i = 0; _chipActions != null && i < _chipActions.Length; i++)
+            chipButtons[i].onClick.RemoveListener(_chipActions[i]);
         clearBetButton.onClick.RemoveListener(game.ClearBet);
         dealButton.onClick.RemoveListener(game.Deal);
         hitButton.onClick.RemoveListener(game.Hit);
         standButton.onClick.RemoveListener(game.Stand);
         doubleButton.onClick.RemoveListener(game.DoubleDown);
         nextButton.onClick.RemoveListener(game.NextRound);
-        restartButton.onClick.RemoveListener(game.Restart);
     }
 
-    private void OnTokensChanged(int tokens) => tokensText.text = "Tokens: " + tokens;
-    private void OnBetChanged(int bet) => betText.text = "Bet: " + bet;
+    private void OnTokensChanged(int tokens) => tokensText.text = string.Format(theme.tokensFormat, tokens);
+    private void OnBetChanged(int bet) => betText.text = string.Format(theme.betFormat, bet);
     private void OnPlayerScoreChanged(int score) => playerScoreText.text = score.ToString();
     private void OnDealerScoreChanged(int score) => RefreshDealerScore();
     private void OnDealerHoleHiddenChanged(bool hidden) => RefreshDealerScore();
     private void OnMessageChanged(string message) => messageText.text = message;
-    private void OnResultChanged(RoundResult result) => messageText.color = theme.ColorFor(result);
 
     private void RefreshDealerScore()
     {
@@ -112,50 +103,79 @@ public class GameUI : MonoBehaviour
             : game.Dealer.Score.Value.ToString();
     }
 
-    private void Bet10() => game.PlaceBet(10);
-    private void Bet25() => game.PlaceBet(25);
-    private void Bet50() => game.PlaceBet(50);
+    private void SetupChips()
+    {
+        int[] values = game.Rules.chipValues;
+        int count = Mathf.Min(chipButtons.Length, values.Length);
+        _chipActions = new UnityAction[count];
+
+        for (int i = 0; i < chipButtons.Length; i++)
+            chipButtons[i].gameObject.SetActive(i < count);
+
+        for (int i = 0; i < count; i++)
+        {
+            int value = values[i];
+            _chipActions[i] = () => game.PlaceBet(value);
+            chipButtons[i].onClick.AddListener(_chipActions[i]);
+            chipButtons[i].GetComponentInChildren<TMP_Text>().text = value.ToString();
+        }
+    }
 
     private void OnStateChanged(GameState state)
     {
         bool betting = state == GameState.Betting;
         bool playerTurn = state == GameState.PlayerTurn;
 
-        bet10Button.interactable = betting;
-        bet25Button.interactable = betting;
-        bet50Button.interactable = betting;
+        foreach (Button chip in chipButtons)
+            chip.interactable = betting;
         clearBetButton.interactable = betting;
         dealButton.interactable = betting;
         hitButton.interactable = playerTurn;
         standButton.interactable = playerTurn;
         doubleButton.interactable = playerTurn;
         nextButton.interactable = state == GameState.Result;
-
-        restartButton.gameObject.SetActive(state == GameState.GameOver);
     }
 
     private void SpawnCard(CardData card, bool isPlayer, bool faceDown)
     {
         Transform parent = isPlayer ? playerCards : dealerCards;
-        CardView view = Instantiate(cardPrefab, parent);
-        view.Setup(card, faceDown, theme, deckPoint);
+        GameObject cardObject = Instantiate(cardPrefab, parent);
 
+        Image cardImage = cardObject.GetComponentInChildren<Image>();
+        if (cardImage != null)
+            cardImage.sprite = faceDown ? theme.cardBack : card.sprite;
+
+        TMP_Text rankText = cardObject.GetComponentInChildren<TMP_Text>();
         if (faceDown)
-            _dealerHoleCard = view;
+        {
+            _holeCardImage = cardImage;
+            _holeCardRankText = rankText;
+            _holeCard = card;
+        }
+
+        if (rankText != null)
+            rankText.text = faceDown || card.sprite != null ? string.Empty : card.rankName;
     }
 
     private void RevealDealerHole()
     {
-        if (_dealerHoleCard == null)
+        if (_holeCardImage == null)
             return;
 
-        _dealerHoleCard.Reveal();
-        _dealerHoleCard = null;
+        _holeCardImage.sprite = _holeCard.sprite;
+        if (_holeCardRankText != null && _holeCard.sprite == null)
+            _holeCardRankText.text = _holeCard.rankName;
+
+        _holeCardImage = null;
+        _holeCardRankText = null;
+        _holeCard = null;
     }
 
     private void ClearCards()
     {
-        _dealerHoleCard = null;
+        _holeCardImage = null;
+        _holeCardRankText = null;
+        _holeCard = null;
         ClearCardContainer(playerCards);
         ClearCardContainer(dealerCards);
     }

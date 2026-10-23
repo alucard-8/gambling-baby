@@ -5,8 +5,6 @@ public class Deck
 {
     private List<CardData> _cards;
 
-    public int Count => _cards.Count;
-
     public Deck(DeckData data)
     {
         _cards = new List<CardData>(data.cards);

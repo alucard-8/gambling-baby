@@ -10,5 +10,7 @@ public class CardData : ScriptableObject
     public int value;
     public Sprite sprite;
 
-    public bool IsAce => rankName == "A";
+    public const string AceRank = "A";
+
+    public bool IsAce => rankName == AceRank;
 }
